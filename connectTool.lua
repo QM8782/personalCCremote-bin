@@ -427,12 +427,22 @@ function startConnection()
 		end
 		return
 	end
-	print("HTTP is enabled! Downloading files")
-	for k, v in pairs({
-		"wget https://cloud-catcher.squiddev.cc/cloud.lua /.connectTool/cloud.lua",
-		"alias /.connectTool/cloud.lua cloud",
-	}) do
-		print("Run command \""..v.."\"")
+	print("HTTP is enabled!")
+	print("Checking for cloud.lua...")
+	if fs.exists("/.connectTool/cloud.lua") then
+		for k, v in pairs({
+			"alias /.connectTool/cloud.lua cloud",
+		}) do
+			print("Run command \""..v.."\"")
+		end
+	else
+		print("Not found. Will be reinstalled.")
+		for k, v in pairs({
+			"wget https://cloud-catcher.squiddev.cc/cloud.lua /.connectTool/cloud.lua",
+			"alias /.connectTool/cloud.lua cloud",
+		}) do
+			print("Run command \""..v.."\"")
+		end
 	end
 	local detailsTable = textutils.unserialize(get("https://raw.githubusercontent.com/QM8782/personalCCremote-bin/refs/heads/main/connectInfo"))
 	if detailsTable.available then
